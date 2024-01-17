@@ -2,7 +2,8 @@ import { useParams } from "react-router-dom";
 
 function Detail(props) {
   let {id} = useParams();
-  console.log(props.shoes[0])
+  const filteredShoes = props.shoes.filter(shoe=>shoe.id == id)
+  console.log(filteredShoes)
   return (
     <div className="container">
       {
@@ -13,11 +14,15 @@ function Detail(props) {
             <img src= {`https://codingapple1.github.io/shop/shoes${id}.jpg`} width="100%" />
           </div>
           <div className="col-md-6">
-            <h4 className="pt-5">{props.shoes.map((x)=>{
-              if (x.id == id-1) {
-                return (JSON.stringify(x))
-              }
-              })}</h4>
+            <h4 className="pt-5">
+              찾은 상품 : {filteredShoes[0].title}
+            </h4>
+            <p>
+              {filteredShoes[0].content}
+            </p>
+            <p>
+              {filteredShoes[0].price}원
+            </p>
             
             <button className="btn btn-danger">주문하기</button> 
           </div>
