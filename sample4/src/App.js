@@ -15,7 +15,7 @@ function App() {
     <div className="App">
       <Navbar className="Navbar" bg="dark" variant="dark">
         <Navbar.Collapse className="d-flex justify-content-between">
-          <Navbar.Brand href="#home" className="m-2">SUSINSA
+          <Navbar.Brand href="/" className="m-2">SUSINSA
           <input className="m-2"></input>
           </Navbar.Brand>
           <Nav className="m-2">
