@@ -2,6 +2,9 @@
   text-align: center;;
 }
 
+.로딩중 {
+  background-color: aqua;
+}
 .titleClass {
   text-align: center;
 }
