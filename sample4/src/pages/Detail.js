@@ -1,16 +1,24 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import './Detail.css';
 
 function Detail(props) {
   let { id } = useParams();
   let [count, setCount] = useState(0);
   let [discount, setDiscount] = useState(true);
+  let [숫자경고, 숫자경고변경] = useState(false);
+  let [입력값, 입력값변경] = useState('');
   useEffect(() => {
     let a = setTimeout(() => {
       setDiscount(false);
     }, 2000);
 
-    console.log(2);
+    if (isNaN(입력값)) {
+      숫자경고변경(true)
+    }
+    else {
+      숫자경고변경(false)
+    }
     return () => {
       console.log(1);
       clearTimeout(a);
@@ -30,23 +38,31 @@ function Detail(props) {
         버튼
       </button>
       {count}
-      {(id == 1) | (id == 2) | (id == 3) ? (
+      {id in [0,1,2] ? (
         <div className="row">
           <div className="col-md-6">
             <img
-              src={`https://codingapple1.github.io/shop/shoes${id}.jpg`}
+              src={`https://codingapple1.github.io/shop/shoes${Number(id)+1}.jpg`}
               width="100%"
               alt=""
             />
           </div>
-          <input
+          <div></div>
+          {
+            숫자경고 == true
+            ? <div className="alert1">
+              경고: 숫자만 입력하세요
+              </div>
+            : null
+          }
+          <div></div>
+          <input className="input1"
             onChange={(e) => {
-              if (isNaN(e.target.value)) {
-                console.log("not");
-                alert("그러지마");
-              }
+              입력값변경(e.target.value)
             }}
-          />
+            />
+       
+            <div></div>
           <div className="col-md-6">
             <h4 className="pt-5">찾은 상품 : {filteredShoes[0].title}</h4>
             <p>{filteredShoes[0].content}</p>

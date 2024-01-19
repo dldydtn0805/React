@@ -7,8 +7,9 @@ import 작명 from './img/bg.png'
 import data from './data.js'
 import {Routes, Route, Link, useNavigate, Outlet} from 'react-router-dom'
 import Detail from './pages/Detail.js'
+import axios from 'axios';
 function App() {
-  let [shoes] = useState(data)
+  let [shoes, 슈즈변경] = useState(data)
   let navigate = useNavigate();
   
   return (
@@ -25,8 +26,9 @@ function App() {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+      
       <Routes>
-        <Route path="/" element={<Main/>}></Route>
+        <Route path="/" element={<Main shoes = {shoes}/>}></Route>
         <Route path="/detail/:id" element={<Detail shoes={shoes}/>}/>
         <Route path="/about" element={<About />}>
           <Route path="member" element={<div>멤버임</div>}></Route>
@@ -40,6 +42,17 @@ function App() {
         <Route path="/about/location" element={<About />}/>
         <Route path="*" element={<div>없는페이지요</div>}></Route>
       </Routes>
+      <button onClick={()=> {
+        axios.get('https://codingapple1.github.io/shop/data2.json')
+        .then(결과=>{
+          let copy = [...shoes, ...결과.data];
+          console.log(copy)
+          슈즈변경(copy)
+        })
+        .catch(() => {
+          console.log('실패함ㅅㄱ')
+        })
+      }}>아무버튼</button>
     </div>
   );
 }
@@ -61,8 +74,7 @@ function About() {
     </div>
   )
 }
-function Main() {
-  let [shoes] = useState(data)
+function Main(props) {
   
   return (
     <div>
@@ -70,9 +82,9 @@ function Main() {
       <Container>
         <Row>
           {
-            shoes.map((a, i) => {
+            props.shoes.map((a, i) => {
               return(
-                <Card i = {i} shoes = {shoes[i]}></Card>
+                <Card i = {i} shoes = {a}></Card>
               )
             })
           }
