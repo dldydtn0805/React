@@ -1,5 +1,13 @@
-.App {
-  text-align: center;;
+
+.start {
+  opacity: 0; 
+  /* 투명도 주는 스타일임 */
+}
+
+.end {
+  opacity: 1;
+  /* opacity가 변경될때 0.5초에 걸쳐서 변경해주세요 */
+  transition: opacity 0.5s;
 }
 
 .로딩중 {
