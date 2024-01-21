@@ -3,8 +3,12 @@ import { useEffect, useState, useContext } from "react";
 import { Nav } from "react-bootstrap";
 import "./Detail.css";
 import { Context1 } from "./../App.js";
+import { addItems } from './../store.js'
+import { useDispatch, useSelector } from "react-redux";
 
 function Detail(props) {
+  let cartItems = useSelector((state)=> state.cartItems)
+  let dispatch = useDispatch()
   let { 재고, shoes } = useContext(Context1);
   let { id } = useParams();
   let [count, setCount] = useState(0);
@@ -37,6 +41,17 @@ function Detail(props) {
   const filteredShoes = props.shoes.filter((shoe) => shoe.id == id);
   return (
     <div className={`container start ${디테일페이드}`}>
+      {
+        cartItems.map((cartItem)=>{
+          return (
+            <div>
+              <p>이름 : {cartItem.name}</p>
+              <p>개수 : {cartItem.count}</p>
+              <p>아이디 : {cartItem.id}</p>
+            </div>
+          )
+        })
+      }
       {discount == true ? (
         <div className="alert alert-warning">2초 이내 구매시 할인</div>
       ) : null}
@@ -67,8 +82,10 @@ function Detail(props) {
             <h4 className="pt-5">찾은 상품 : {filteredShoes[0].title}</h4>
             <p>{filteredShoes[0].content}</p>
             <p>{filteredShoes[0].price}원</p>
-
-            <button className="btn btn-danger">주문하기</button>
+            <button className="btn btn-danger" onClick={()=>{
+              dispatch(addItems(filteredShoes[0].title))
+              console.log('장바구니에 추가함')
+            }}>주문하기</button>
           </div>
           <Nav variant="tabs" defaultActiveKey="link1">
             <Nav.Item>
