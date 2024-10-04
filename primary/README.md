@@ -7,7 +7,6 @@
 ## JSX
 
 - JS에서 쓰는 HTML
-
     - className
         - JSX에서 쓰는 CSS
         - JS의 class와 의미가 겹치기 때문에 className이라 작성한다
@@ -70,3 +69,76 @@
     )
     ```
 
+## Array / Object 수정
+
+- 원본 보존하고 복사하는것이 좋다
+    - `const copy = [...orgiginal]`
+        - `[...original] : Destructuring`을 해야하는 이유
+        - state 변경 함수의 특징 : 기존 상태와 신규 상태가 같을 경우 변경을 안한다
+        - Array / Object의 특징 : Array와 Object에는 화살표만 저장이 된다 [REFERENCE TYPE]
+
+## 자바스크립트 객체 정렬
+
+- 객체 속 문자열의 오름차순 정렬은 `Object.sort((X, Y)=> X.key < Y.key ? -1 : 1)` 로 한다
+- nextArticles로 갱신하는 이유는 리렌더링을 위해서이다. [REFERENCE TYPE의 한계]
+
+    ```js
+    function sortTitle() {
+        articles.sort((X, Y) => 
+            X.title < Y.title ? -1 : 1
+        );
+        const nextArticles = [...articles]
+        setArticles(nextArticles)
+    }
+    ```
+
+## 서브 컴포넌트
+- main function 바깥에 function을 하나 만들고 return (JSX) 반환한다
+- <함수명> </함수명> 혹은 <함수명> 컴포넌트를 사용한다
+- 서브 컴포넌트를 만들면 좋은 상황
+    - 반복적인 HTML 축약
+    - 큰 페이지 [페이지 전환시 사용]
+    - 자주 변경되는 HTML UI
+- 상태 가져다 쓸때 문제가 생긴다 [A 함수에 있는 변수를 B 함수에서 마음대로 사용 할 수 없다]
+
+## 동적 UI STEP
+
+1. HTML CSS 로 디자인
+2. UI 현재 상태를 STATE로 저장
+3. STATE에 따라 UI가 어떻게 보일지 선택
+
+## 삼항 연산자
+
+- 조건 ? 참 : 거짓
+    - `{모달 조건 ? <모달컴포넌트></모달컴포넌트> : null}`
+    - null은 비어있는 HTML으로 자주 사용
+
+## Map
+
+- Array 각각 요소에 콜백 함수를 실행 
+- 각 return 값을 모아 배열로 반환
+- 첫번째 인자는 각각의 요소 두번째 인자[생략가능]는 반복문의 인덱스
+
+## Props
+
+- 부모 -> 자식만 가능하다
+    1. <자식컴포넌트 propsName={stateName}>
+    2. 인자에 props 등록
+    3. props.propsName 사용
+        - 구조 분해 할당을 해서 {propsName}으로 인자를 받을 수 있다
+    4. 다양한 상태를 보낼 수 있다 [함수도 전달 가능하다]
+        
+    ```js
+    <Modal swapGender={swapGender} color={colors[key%(colors.length)]} article={article}></Modal>
+
+    function Modal ({swapGender, color, article}) {
+    const {id, title, date, detail} = article
+    return (
+        <div className="modal" style={{background : `${color}`}}>
+        <h4>{title} <button onClick={()=>{swapGender(2, id)}}>수정</button></h4>
+        <p>{date}</p>
+        <p>{detail}</p>
+        </div>
+    )
+    }
+    ```

@@ -8,10 +8,21 @@ div {
 
 .black-nav {
   display: flex;
+  justify-content:space-between;
+  align-items: center;
   background: black;
   width: 100%;
   color : white;
   padding-left : 20px;
+}
+
+.black-nav > .gender-swap {
+  cursor: pointer;
+}
+
+.black-nav > .sort-title {
+  cursor: pointer;
+  padding-right : 20px;
 }
 
 .list {
@@ -20,7 +31,20 @@ div {
   border-bottom: 1px solid grey;
 }
 
-.list > span {
+
+.list > h4 > .title {
   cursor: pointer;
+  padding-right: 20px;
 }
 
+.list > h4 > .like {
+  cursor: pointer;
+  padding-right: 20px;
+
+}
+
+.modal {
+  margin-top: 20px;
+  padding: 20px;
+  text-align: left;
+}
