@@ -142,3 +142,72 @@
     )
     }
     ```
+
+## INPUT 태그
+
+- type : date / checkbox / text / range 등 여러 형태가 있다
+- 유사 INPUT 태그 : select / textarea [큰 inputbox]
+- onChange / onInput
+    - input에 무언가 입력했을때 콜백함수가 실행된다
+    - `<input onChange={(E)=>{}}>`에서 E에 입력한 값이 들어있다 [E.target.value]
+        - [참고] E.stop.Propagation() : 상위 HTML로 퍼지는 이벤트 버블링을 막는다 
+    - onKeyDown / onKeyUp / onChange / onInput 다양한 입력 핸들러가 있다
+    - *주의사항* : state 변경 함수는 살짝 느리게 처리된다 
+
+## 클래스 컴포넌트 [LEGACY]
+
+- constructor / super / render 를 사용해서 기본 템플릿을 만든다
+    ```js
+    class OldModal extends React.Component {
+    constructor() {
+        super()
+    }
+    render () {
+        return (
+        <div>Hello</div>
+        )
+    }
+    }
+    ```
+- 상태 선언은 contstructor 안에서 한다
+    ```js
+    this.state = {
+        name : 'kim',
+        age : 20,
+    };
+    ```
+
+- 상태 변경은 this.setState로 한다
+    ```js
+    <button onClick={()=>{this.setState({age : 21})}}>상태수정</button>
+    ``` 
+    - 기존 state에서 변경사항만 반영해준다
+
+- props는 constructor와 super의 인자로 받는다
+    ```js
+    constructor(props) {
+    super(props);
+    }
+    {this.props.age}
+    ```
+- 예시코드
+    ```js
+    class OldModal extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        name : 'kim',
+        age : 20,
+        };
+    }
+    render () {
+        return (
+        <div>
+            Hello {this.state.name} You are {this.state.age} years old
+            {this.props.age}
+            <button onClick={()=>{this.setState({age : 21})}}>상태수정</button>
+        </div>
+        )
+    }
+    }
+    ```
